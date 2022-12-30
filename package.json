@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "format:check": "prettier src/",
+    "format:fix": "prettier --write src/"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.1"
+  }
+}
