@@ -28,6 +28,11 @@ async function draw(el, scale) {
       .scaleLinear()
       .domain(d3.extent(dataset))
       .range(['white', 'red'])
+  } else if (scale === 'quantize') {
+    colorScale = d3
+      .scaleQuantize()
+      .domain(d3.extent(dataset))
+      .range(['white', 'pink', 'red'])
   }
 
   // Rectangles
@@ -46,3 +51,4 @@ async function draw(el, scale) {
 }
 
 draw('#heatmap1', 'linear')
+draw('#heatmap2', 'quantize')
