@@ -19,6 +19,12 @@ async function draw() {
     },
   }
 
+  dimensions.containerWidth =
+    dimensions.width - dimensions.margin.right - dimensions.margin.left
+
+  dimensions.containerHeight =
+    dimensions.height - dimensions.margin.top - dimensions.margin.bottom
+
   // Draw image
   const svg = d3
     .select('#chart')
@@ -33,13 +39,24 @@ async function draw() {
       `translate(${dimensions.margin.left}, ${dimensions.margin.top})`
     )
 
+  // Set scales
+  const xScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataset, xAccessor))
+    .range([0, dimensions.containerWidth])
+
+  const yScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataset, yAccessor))
+    .range([0, dimensions.containerHeight])
+
   // Draw circles
   container
     .selectAll('circle')
     .data(dataset)
     .join('circle')
-    .attr('cx', xAccessor)
-    .attr('cy', yAccessor)
+    .attr('cx', (d) => xScale(xAccessor(d)))
+    .attr('cy', (d) => yScale(yAccessor(d)))
     .attr('r', 5)
     .attr('fill', 'red')
 }
