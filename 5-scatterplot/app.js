@@ -65,7 +65,10 @@ async function draw() {
     .attr('data-temp', yAccessor)
 
   // Draw X axis
-  const xAxis = d3.axisBottom(xScale)
+  const xAxis = d3
+    .axisBottom(xScale)
+    .ticks(5)
+    .tickFormat((d) => d * 100 + '%')
 
   const xAxisGroup = container
     .append('g')

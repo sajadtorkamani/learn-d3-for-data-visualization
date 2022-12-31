@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "format:check": "prettier src/",
-    "format:fix": "prettier --write src/"
+    "format:check": "prettier **/*.{html,css,js,json}",
+    "format:fix": "prettier --write **/*.{html,css,js,json}"
   },
   "devDependencies": {
     "prettier": "^2.8.1"
