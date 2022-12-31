@@ -43,12 +43,15 @@ async function draw() {
   const xScale = d3
     .scaleLinear()
     .domain(d3.extent(dataset, xAccessor))
-    .range([0, dimensions.containerWidth])
+    .rangeRound([0, dimensions.containerWidth])
+    .clamp(true)
 
   const yScale = d3
     .scaleLinear()
     .domain(d3.extent(dataset, yAccessor))
-    .range([0, dimensions.containerHeight])
+    .rangeRound([0, dimensions.containerHeight])
+    .nice()
+    .clamp(true)
 
   // Draw circles
   container
@@ -59,6 +62,14 @@ async function draw() {
     .attr('cy', (d) => yScale(yAccessor(d)))
     .attr('r', 5)
     .attr('fill', 'red')
+
+  // Draw axes
+  const xAxis = d3.axisBottom(xScale)
+
+  container
+    .append('g')
+    .call(xAxis)
+    .style('transform', `translateY(${dimensions.containerHeight}px)`)
 }
 
 draw()
