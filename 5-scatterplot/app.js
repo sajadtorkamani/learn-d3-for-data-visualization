@@ -66,10 +66,18 @@ async function draw() {
   // Draw axes
   const xAxis = d3.axisBottom(xScale)
 
-  container
+  const xAxisGroup = container
     .append('g')
     .call(xAxis)
     .style('transform', `translateY(${dimensions.containerHeight}px)`)
+    .classed('axis', true)
+
+  xAxisGroup
+    .append('text')
+    .attr('x', dimensions.containerWidth / 2)
+    .attr('y', dimensions.margin.bottom - 10)
+    .attr('fill', 'black')
+    .text('Humidity')
 }
 
 draw()

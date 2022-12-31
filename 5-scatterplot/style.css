@@ -3,7 +3,7 @@
   height: 800px;
   background-color: #f7f7f7;
   margin: 25px auto;
-  position: relative
+  position: relative;
 }
 
 #tooltip {
@@ -17,4 +17,9 @@
 
 #tooltip .metric-date {
   text-decoration: underline;
+}
+
+.axis {
+  font-size: 18px;
+  shape-rendering: geometricPrecision;
 }
