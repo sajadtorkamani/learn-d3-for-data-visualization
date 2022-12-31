@@ -3,6 +3,7 @@
 async function draw(el, scale) {
   // Data
   const dataset = await d3.json('data.json')
+  dataset.sort((a, b) => a - b)
 
   const box = 30
 
