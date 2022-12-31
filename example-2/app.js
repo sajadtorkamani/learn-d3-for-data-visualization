@@ -1,20 +1,18 @@
 const data = [10, 20, 30, 40, 50]
 
+// Update selection
 const el = d3
   .select('ul')
   .selectAll('li')
   .data(data)
-  .join(
-    (enter) => {
-      return enter.append('li').style('color', 'purple')
-    },
-    (update) => {
-      return update.style('color', 'green')
-    },
-    (exit) => {
-      return exit.remove()
-    }
-  )
   .text((d) => d)
+
+// Enter selection
+el.enter()
+  .append('li')
+  .text((d) => d)
+
+// Exit selection
+el.exit().remove()
 
 console.log(el)
