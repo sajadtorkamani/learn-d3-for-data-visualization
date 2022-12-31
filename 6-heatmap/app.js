@@ -30,18 +30,23 @@ async function draw(el, scale) {
         .domain(d3.extent(dataset))
         .range(['white', 'red'])
       break
+
     case 'quantize':
       colorScale = d3
         .scaleQuantize()
         .domain(d3.extent(dataset))
         .range(['white', 'pink', 'red'])
+      console.log('Quantize', colorScale.thresholds())
       break
+
     case 'quantile':
       colorScale = d3
         .scaleQuantile()
         .domain(dataset)
         .range(['white', 'pink', 'red'])
+      console.log('Quantile', colorScale.quantiles())
       break
+
     case 'threshold':
       colorScale = d3
         .scaleThreshold()
