@@ -36,6 +36,9 @@ async function draw() {
     .attr('cx', dimensions.margin)
     .attr('cy', (d) => universeScale(sizeAccessor(d)))
     .attr('r', 6)
+    .on('click', (event, d) => {
+      console.log(`You clicked the circle for ${nameAccessor(d)}`)
+    })
 
   circlesGroup
     .selectAll('text')
@@ -44,6 +47,9 @@ async function draw() {
     .attr('x', dimensions.margin + 15)
     .attr('y', (d) => universeScale(sizeAccessor(d)))
     .text(nameAccessor)
+    .on('click', (event, d) => {
+      console.log(`You clicked the text for ${nameAccessor(d)}`)
+    })
 
   const axis = d3.axisLeft(universeScale)
 
