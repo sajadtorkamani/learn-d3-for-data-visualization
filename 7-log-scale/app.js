@@ -24,7 +24,10 @@ async function draw() {
     .domain(d3.extent(dataset, sizeAccessor))
     .range([dimensions.height - dimensions.margin, dimensions.margin])
 
-  const circlesGroup = svg.append('g')
+  const circlesGroup = svg
+    .append('g')
+    .style('font-size', '16px')
+    .style('dominant-baseline', 'middle')
 
   circlesGroup
     .selectAll('circle') // Select all the circle elements (none yet)
@@ -41,6 +44,13 @@ async function draw() {
     .attr('x', dimensions.margin + 15)
     .attr('y', (d) => universeScale(sizeAccessor(d)))
     .text(nameAccessor)
+
+  const axis = d3.axisLeft(universeScale)
+
+  svg
+    .append('g')
+    .attr('transform', `translate(${dimensions.margin}, 0)`)
+    .call(axis)
 }
 
 draw()
