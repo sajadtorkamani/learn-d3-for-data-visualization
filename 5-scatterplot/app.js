@@ -39,6 +39,8 @@ async function draw() {
       `translate(${dimensions.margin.left}, ${dimensions.margin.top})`
     )
 
+  const tooltip = d3.select('#tooltip')
+
   // Set scales
   const xScale = d3
     .scaleLinear()
@@ -63,6 +65,19 @@ async function draw() {
     .attr('r', 5)
     .attr('fill', 'red')
     .attr('data-temp', yAccessor)
+    .on('mouseenter', function (event, datum) {
+      d3.select(this).attr('fill', '#120078').attr('r', 8)
+
+      tooltip
+        .style('display', 'block')
+        .style('top', yScale(yAccessor(datum)) - 25 + 'px')
+        .style('left', xScale(xAccessor(datum)) + 'px')
+    })
+    .on('mouseleave', function (event) {
+      d3.select(this).attr('fill', 'red').attr('r', 5)
+
+      tooltip.style('display', 'none')
+    })
 
   // Draw X axis
   const xAxis = d3
