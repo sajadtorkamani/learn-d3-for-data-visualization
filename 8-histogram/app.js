@@ -93,8 +93,22 @@ async function draw() {
     labelsGroup
       .selectAll('text')
       .data(newDataset)
-      .join('text')
-      .transition()
+      // .join('text')
+      .join(
+        (enter) =>
+          enter
+            .append('text')
+            .attr('x', (d) => xScale(d.x0) + (xScale(d.x1) - xScale(d.x0)) / 2)
+            .attr('y', dimensions.ctrHeight)
+            .text(yAccessor),
+        (update) => update,
+        (exit) =>
+          exit
+            .transition(exitTransition)
+            .attr('y', dimensions.ctrHeight)
+            .remove()
+      )
+      .transition(updateTransition)
       .attr('x', (d) => xScale(d.x0) + (xScale(d.x1) - xScale(d.x0)) / 2)
       .attr('y', (d) => yScale(yAccessor(d)) - 10)
       .text(yAccessor)
