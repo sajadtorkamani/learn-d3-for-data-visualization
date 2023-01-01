@@ -1,8 +1,11 @@
+'use strict'
+
 async function draw() {
   // Data
   const dataset = await d3.json('data.json')
 
   const xAccessor = (d) => d.currently.humidity
+  const yAccessor = (d) => d.length
 
   // Dimensions
   let dimensions = {
@@ -38,18 +41,43 @@ async function draw() {
   const bin = d3.bin().domain(xScale.domain()).value(xAccessor).thresholds(10)
 
   const newDataset = bin(dataset)
+  const padding = 1
 
-  console.log({ originalData: dataset, newData: newDataset })
+  const yScale = d3
+    .scaleLinear()
+    .domain([0, d3.max(newDataset, yAccessor)])
+    .range([dimensions.ctrHeight, 0])
+    .nice()
 
   // Draw bars
   ctr
     .selectAll('rect')
-    .data(dataset)
+    .data(newDataset)
     .join('rect')
-    .attr('width', 5)
-    .attr('height', 100)
-    .attr('x', (d) => xScale(xAccessor(d)))
-    .attr('y', 0)
+    .attr('width', (d) => d3.max([0, xScale(d.x1) - xScale(d.x0) - padding]))
+    .attr('height', (d) => dimensions.ctrHeight - yScale(yAccessor(d)))
+    .attr('x', (d) => xScale(d.x0))
+    .attr('y', (d) => yScale(yAccessor(d)))
+    .attr('fill', '#01c5c4')
+
+  ctr
+    .append('g')
+    .classed('bar-labels', true)
+    .selectAll('text')
+    .data(newDataset)
+    .join('text')
+    .attr('x', (d) => xScale(d.x0) + (xScale(d.x1) - xScale(d.x0)) / 2)
+    .attr('y', (d) => yScale(yAccessor(d)) - 10)
+    .text(yAccessor)
+
+  // Draw axis
+  const xAxis = d3.axisBottom(xScale)
+
+  const xAxisGroup = ctr
+    .append('g')
+    .style('transform', `translateY(${dimensions.ctrHeight}px)`)
+
+  xAxisGroup.call(xAxis)
 }
 
 draw()
