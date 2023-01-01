@@ -53,6 +53,7 @@ async function draw() {
     .scaleBand()
     .domain(dataset.map((state) => state.name))
     .range([dimensions.margins, dimensions.ctrWidth])
+    .padding(0.1)
 
   const colorScale = d3
     .scaleOrdinal()
