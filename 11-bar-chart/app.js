@@ -36,10 +36,47 @@ async function draw() {
       state.key = ageGroup.key
     })
 
-    return ageGroupj
+    return ageGroup
   })
 
-  console.log(stackData)
+  const yScale = d3
+    .scaleLinear()
+    .domain([
+      0,
+      d3.max(stackData, (ageGroup) => {
+        return d3.max(ageGroup, (state) => state[1])
+      }),
+    ])
+    .rangeRound([dimensions.ctrHeight, dimensions.margins])
+
+  const xScale = d3
+    .scaleBand()
+    .domain(dataset.map((state) => state.name))
+    .range([dimensions.margins, dimensions.ctrWidth])
+
+  const colorScale = d3
+    .scaleOrdinal()
+    .domain(stackData.map((d) => d.key))
+    .range(d3.schemeSpectral[stackData.length])
+    .unknown('#ccc')
+
+  // Draw bars
+  const ageGroups = ctr
+    .append('g')
+    .classed('age-groups', true)
+    .selectAll('g')
+    .data(stackData)
+    .join('g')
+    .attr('fill', (d) => colorScale(d.key))
+
+  ageGroups
+    .selectAll('rect')
+    .data((d) => d)
+    .join('rect')
+    .attr('x', (d) => xScale(d.data.name))
+    .attr('y', (d) => yScale(d[1]))
+    .attr('width', xScale.bandwidth())
+    .attr('height', (d) => yScale(d[0]) - yScale(d[1]))
 }
 
 draw()
