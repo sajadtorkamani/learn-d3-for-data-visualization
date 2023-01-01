@@ -84,9 +84,35 @@ async function draw() {
     .style('opacity', 0)
     .on('touchmouse mousemove', function (event) {
       const mousePos = d3.pointer(event, this)
-      console.log(mousePos)
+      const date = xScale.invert(mousePos[0])
+
+      // Custom bisector - will have the left, center, right properties
+      const bisector = d3.bisector(xAccessor).left
+      const index = bisector(dataset, date)
+      const stock = dataset[index - 1]
+
+      // Update image
+      tooltipDot
+        .style('opacity', 1)
+        .attr('cx', xScale(xAccessor(stock)))
+        .attr('cy', yScale(yAccessor(stock)))
+        .raise()
+
+      tooltip
+        .style('display', 'block')
+        .style('top', yScale(yAccessor(stock)) - 20 + 'px')
+        .style('left', xScale(xAccessor(stock)) + 'px')
+
+      tooltip.select('.price').text(`$${yAccessor(stock)}`)
+
+      const dateFormatter = d3.timeFormat('%B %-d, %Y')
+
+      tooltip.select('.date').text(`${dateFormatter(xAccessor(stock))}`)
     })
-    .on('mouseleave', function (event) {})
+    .on('mouseleave', function (event) {
+      tooltipDot.style('opacity', 0)
+      tooltip.style('display', 'none')
+    })
 }
 
 draw()
