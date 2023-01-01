@@ -2,8 +2,9 @@ async function draw() {
   // Data
   const dataset = await d3.csv('data.csv')
 
-  const xAccessor = (d) => d.date
-  const yAccessor = (d) => d.close
+  const parseDate = d3.timeParse('%Y-%m-%d')
+  const xAccessor = (d) => parseDate(d.date)
+  const yAccessor = (d) => parseInt(d.close)
 
   // Dimensions
   let dimensions = {
@@ -35,6 +36,29 @@ async function draw() {
     .domain(d3.extent(dataset, yAccessor))
     .range([dimensions.ctrHeight, 0])
     .nice()
+
+  const xScale = d3
+    .scaleUtc()
+    .domain(d3.extent(dataset, xAccessor))
+    .range([0, dimensions.ctrWidth])
+
+  // console.log(xScale(xAccessor(dataset[0])), dataset[0])
+
+  // This helps us draw a line over several points
+  const lineGenerator = d3
+    .line()
+    .x((d) => xScale(xAccessor(d)))
+    .y((d) => yScale(yAccessor(d)))
+
+  // console.log(lineGenerator(dataset))
+
+  ctr
+    .append('path')
+    .datum(dataset)
+    .attr('d', lineGenerator)
+    .attr('fill', 'none')
+    .attr('stroke', '#30475e')
+    .attr('stroke-width', 2)
 }
 
 draw()
