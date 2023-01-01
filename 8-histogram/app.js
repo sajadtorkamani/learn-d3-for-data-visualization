@@ -60,6 +60,7 @@ async function draw() {
     .attr('y', (d) => yScale(yAccessor(d)))
     .attr('fill', '#01c5c4')
 
+  // Draw labels
   ctr
     .append('g')
     .classed('bar-labels', true)
