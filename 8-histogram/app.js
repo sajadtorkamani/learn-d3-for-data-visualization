@@ -61,6 +61,7 @@ async function draw() {
       .selectAll('rect')
       .data(newDataset)
       .join('rect')
+      .transition()
       .attr('width', (d) => d3.max([0, xScale(d.x1) - xScale(d.x0) - padding]))
       .attr('height', (d) => dimensions.ctrHeight - yScale(yAccessor(d)))
       .attr('x', (d) => xScale(d.x0))
@@ -71,6 +72,7 @@ async function draw() {
       .selectAll('text')
       .data(newDataset)
       .join('text')
+      .transition()
       .attr('x', (d) => xScale(d.x0) + (xScale(d.x1) - xScale(d.x0)) / 2)
       .attr('y', (d) => yScale(yAccessor(d)) - 10)
       .text(yAccessor)
@@ -78,7 +80,7 @@ async function draw() {
     // Draw axis
     const xAxis = d3.axisBottom(xScale)
 
-    xAxisGroup.call(xAxis)
+    xAxisGroup.transition().call(xAxis)
   }
 
   d3.select('#metric').on('change', function (event) {
