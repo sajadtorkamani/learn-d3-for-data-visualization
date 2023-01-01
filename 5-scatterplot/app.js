@@ -66,16 +66,30 @@ async function draw() {
     .attr('fill', 'red')
     .attr('data-temp', yAccessor)
     .on('mouseenter', function (event, datum) {
+      // Style the active dot
       d3.select(this).attr('fill', '#120078').attr('r', 8)
 
+      // Show tooltip and position it next to the dot
       tooltip
         .style('display', 'block')
         .style('top', yScale(yAccessor(datum)) - 25 + 'px')
         .style('left', xScale(xAccessor(datum)) + 'px')
+
+      const formatter = d3.format('.2f')
+      const dateFormatter = d3.timeFormat('%B %-d, %Y')
+
+      // Set tooltip contents
+      tooltip.select('.metric-humidity span').text(formatter(xAccessor(datum)))
+      tooltip.select('.metric-temp span').text(formatter(yAccessor(datum)))
+      tooltip
+        .select('.metric-date')
+        .text(dateFormatter(datum.currently.time * 1000))
     })
     .on('mouseleave', function (event) {
+      // Revert styles of active dot
       d3.select(this).attr('fill', 'red').attr('r', 5)
 
+      // Hide tooltip
       tooltip.style('display', 'none')
     })
 
