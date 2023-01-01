@@ -1,9 +1,12 @@
 async function draw() {
   // Data
-  const dataset = await d3.csv('data.csv', (d) => {
+  const dataset = await d3.csv('data.csv', (d, index, columns) => {
     d3.autoType(d)
+    d.total = d3.sum(columns, (column) => d[column])
     return d
   })
+
+  dataset.sort((a, b) => b.total - a.total)
 
   // Dimensions
   let dimensions = {
