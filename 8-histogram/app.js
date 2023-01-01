@@ -73,10 +73,11 @@ async function draw() {
             .attr('height', 0)
             .attr('x', (d) => xScale(d.x0))
             .attr('y', dimensions.ctrHeight)
-            .attr('fill', '#01c5c4'),
+            .attr('fill', '#b8de6f'),
         (update) => update,
         (exit) =>
           exit
+            .attr('fill', '#f39233')
             .transition(exitTransition)
             .attr('y', dimensions.ctrHeight)
             .attr('height', 0)
