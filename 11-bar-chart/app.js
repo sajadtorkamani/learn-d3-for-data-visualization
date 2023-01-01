@@ -1,6 +1,9 @@
 async function draw() {
   // Data
-  const dataset = await d3.csv('data.csv')
+  const dataset = await d3.csv('data.csv', (d) => {
+    d3.autoType(d)
+    return d
+  })
 
   // Dimensions
   let dimensions = {
@@ -27,6 +30,16 @@ async function draw() {
     )
 
   // Scales
+  const stackGenerator = d3.stack().keys(dataset.columns.slice(1))
+  const stackData = stackGenerator(dataset).map((ageGroup) => {
+    ageGroup.forEach((state) => {
+      state.key = ageGroup.key
+    })
+
+    return ageGroupj
+  })
+
+  console.log(stackData)
 }
 
 draw()
