@@ -30,6 +30,16 @@ async function draw() {
       `translate(${dimensions.margins}, ${dimensions.margins})`
     )
 
+  const tooltip = d3.select('#tooltip')
+  const tooltipDot = ctr
+    .append('circle')
+    .attr('r', 5)
+    .attr('fill', '#fc8781')
+    .attr('stroke', 'black')
+    .attr('stroke-width', 2)
+    .style('opacity', 0)
+    .style('pointer-events', 'none')
+
   // Scales
   const yScale = d3
     .scaleLinear()
@@ -65,6 +75,18 @@ async function draw() {
     .append('g')
     .style('transform', `translateY(${dimensions.ctrHeight}px)`)
     .call(xAxis)
+
+  // Tooltip
+  ctr
+    .append('rect')
+    .attr('width', dimensions.ctrWidth)
+    .attr('height', dimensions.ctrHeight)
+    .style('opacity', 0)
+    .on('touchmouse mousemove', function (event) {
+      const mousePos = d3.pointer(event, this)
+      console.log(mousePos)
+    })
+    .on('mouseleave', function (event) {})
 }
 
 draw()
