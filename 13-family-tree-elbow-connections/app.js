@@ -71,11 +71,11 @@ function draw() {
       const sourceY = d.source.y
       const targetX = d.target.x
       const targetY = d.target.y
-      const controlPointY = (sourceY + targetY) / 2
 
       // Set starting point to current node's coordinates
       const startPoint = `${sourceX},${sourceY}`
 
+      // Draw vertical and horizontal lines
       return `M${startPoint} v 50 H${targetX} V${targetY}`
     })
 
