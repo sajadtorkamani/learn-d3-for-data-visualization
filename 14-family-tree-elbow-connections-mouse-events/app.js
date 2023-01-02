@@ -9,7 +9,7 @@ function draw() {
     { child: 'Hannah', parent: 'Ann' },
     { child: 'Rose', parent: 'Sarah' },
     { child: 'Ann', parent: 'John', spouse: 'George' },
-    { child: 'Sarah', parent: 'Kevin' },
+    { child: 'Sarah', parent: 'Kevin', spouse: 'James' },
     { child: 'Mark', parent: 'Ann' },
     { child: 'Angel', parent: 'Sarah' },
     { child: 'Tom', parent: 'Hannah' },
@@ -56,6 +56,7 @@ function draw() {
   // Draw connections
   const connections = container
     .append('g')
+    .attr('group-id', 'connections')
     .selectAll('path')
     .data(information.links()) // Bind link data to the path elements
 
@@ -75,7 +76,28 @@ function draw() {
       const startPoint = `${sourceX - X_OFFSET},${sourceY}`
 
       // Draw vertical and horizontal lines
-      return `M${startPoint} v 50 H${targetX} V${targetY}`
+      return `M${startPoint} h 60 v 50 H${targetX} V${targetY}`
+    })
+
+  const spouseConnections = container
+    .append('g')
+    .attr('group-id', 'spouse-connections')
+    .selectAll('path')
+    .data(information.links()) // Bind link data to the path elements
+
+  spouseConnections
+    .enter()
+    .append('path')
+    // Draw connection between current node and child nodes
+    .attr('d', (d) => {
+      const sourceX = d.source.x
+      const sourceY = d.source.y
+
+      // Set starting point to current node's coordinates
+      const startPoint = `${sourceX + X_OFFSET * 2},${sourceY}`
+
+      // Draw vertical and horizontal lines
+      return `M${startPoint} h 40`
     })
 
   // Draw rectangles
