@@ -4,3 +4,15 @@ rect {
   stroke-width: 2;
 }
 
+text {
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+.text-lg {
+  font-size: 20px;
+}
+
+.hide {
+  visibility: hidden;
+}

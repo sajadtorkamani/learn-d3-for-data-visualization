@@ -3,12 +3,12 @@ function draw() {
 
   // Data
   const data = [
-    { child: 'John', parent: '' },
+    { child: 'John', parent: '', spouse: 'Isabella' },
     { child: 'Aaron', parent: 'Kevin' },
-    { child: 'Kevin', parent: 'John' },
+    { child: 'Kevin', parent: 'John', spouse: 'Emma' },
     { child: 'Hannah', parent: 'Ann' },
     { child: 'Rose', parent: 'Sarah' },
-    { child: 'Ann', parent: 'John' },
+    { child: 'Ann', parent: 'John', spouse: 'George' },
     { child: 'Sarah', parent: 'Kevin' },
     { child: 'Mark', parent: 'Ann' },
     { child: 'Angel', parent: 'Sarah' },
@@ -115,15 +115,12 @@ function draw() {
     .attr('y', (datum) => datum.y - dimensions.rectangleHeight / 2) // Set x coordinate
     .attr('width', dimensions.rectangleWidth)
     .attr('height', dimensions.rectangleHeight)
-
-  console.log(spouseRectangles)
+    .classed('hide', (datum) => typeof datum.spouse === 'undefined')
 
   // Draw labels
   const names = container
     .append('g')
-    .style('dominant-baseline', 'middle')
-    .style('text-anchor', 'middle')
-    .style('font-size', '20px')
+    .classed('text-lg', true)
     .selectAll('text')
     // Bind descendant info to text elements
     .data(information.descendants())
@@ -134,6 +131,26 @@ function draw() {
     .text((datum) => datum.data.child) // The `data` property contains the original data
     .attr('x', (datum) => datum.x - X_OFFSET)
     .attr('y', (datum) => datum.y)
+
+  const spouseNames = container
+    .append('g')
+    .selectAll('text')
+    .data(information.descendants())
+
+  spouseNames
+    .enter()
+    .append('text')
+    .text((datum) => datum.data.spouse)
+    .attr(
+      'x',
+      (datum) =>
+        datum.x +
+        (dimensions.rectangleWidth / 2 +
+          X_OFFSET +
+          dimensions.rectangleWidth / 2)
+    )
+    .attr('y', (datum) => datum.y)
+    .classed('text-lg', true)
 }
 
 draw()
