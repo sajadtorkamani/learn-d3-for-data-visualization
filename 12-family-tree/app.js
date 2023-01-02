@@ -10,6 +10,7 @@ function draw() {
     { child: 'Sarah', parent: 'Kevin' },
     { child: 'Mark', parent: 'Ann' },
     { child: 'Angel', parent: 'Sarah' },
+    { child: 'Tom', parent: 'Hannah' },
   ]
 
   // Dimensions
@@ -121,3 +122,8 @@ function draw() {
 }
 
 draw()
+
+// Sources
+// ---------
+// https://tinyurl.com/yun2582r
+// https://tinyurl.com/4y7z6dnp
