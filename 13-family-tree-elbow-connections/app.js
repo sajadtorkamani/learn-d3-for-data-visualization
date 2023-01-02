@@ -77,6 +77,9 @@ function draw() {
   // Draw connections
   const connections = container
     .append('g')
+    .style('fill', 'none')
+    .style('stroke', 'silver')
+    .style('stroke-width', 2)
     .selectAll('path')
     .data(information.links()) // Bind link data to the path elements
 
@@ -96,16 +99,8 @@ function draw() {
       // Set starting point to current node's coordinates
       const startPoint = `${sourceX},${sourceY}`
 
-      // Set control points
-      const controlPoints = `${sourceX},${controlPointY} ${targetX},${controlPointY}`
-
-      // Set end points
-      const endPoint = `${targetX},${targetY}`
-
-      return `M${startPoint} C ${controlPoints} ${endPoint}`
+      return `M${startPoint} v 50 H${targetX} V${targetY}`
     })
-    .style('fill', 'none')
-    .style('stroke', 'red')
 
   // Draw labels
   const names = container
