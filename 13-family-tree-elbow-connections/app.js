@@ -1,4 +1,6 @@
 function draw() {
+  const X_OFFSET = 20
+
   // Data
   const data = [
     { child: 'John', parent: '' },
@@ -73,7 +75,7 @@ function draw() {
       const targetY = d.target.y
 
       // Set starting point to current node's coordinates
-      const startPoint = `${sourceX},${sourceY}`
+      const startPoint = `${sourceX - X_OFFSET},${sourceY}`
 
       // Draw vertical and horizontal lines
       return `M${startPoint} v 50 H${targetX} V${targetY}`
@@ -93,7 +95,7 @@ function draw() {
     .append('rect')
     // Set X coordinate. Subtract 40 (half of the rectangle width) to
     // horizontally align the rectangle with the point.
-    .attr('x', (datum) => datum.x - dimensions.rectangleWidth / 2)
+    .attr('x', (datum) => datum.x - (dimensions.rectangleWidth / 2 + X_OFFSET))
 
     // Set Y coordinate. Subtract 20 (half of the rectangle height) to
     // vertically align the rectangle with the point.
@@ -115,7 +117,7 @@ function draw() {
     .enter()
     .append('text')
     .text((datum) => datum.data.child) // The `data` property contains the original data
-    .attr('x', (datum) => datum.x)
+    .attr('x', (datum) => datum.x - X_OFFSET)
     .attr('y', (datum) => datum.y)
 }
 
