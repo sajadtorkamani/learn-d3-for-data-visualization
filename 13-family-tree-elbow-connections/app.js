@@ -82,7 +82,7 @@ function draw() {
   // Draw rectangles
   const rectangles = container
     .append('g')
-    .style('fill', 'none')
+    .style('fill', 'white')
     .style('stroke', 'silver')
     .style('stroke-width', 2)
     .selectAll('rect')
@@ -122,16 +122,6 @@ draw()
 
 // ## Sources
 // ---------
-// https://tinyurl.com/yun2582r
-// https://tinyurl.com/4y7z6dnp
-//
+// https://tinyurl.com/3b7783ax
+// https://tinyurl.com/mwpefwb6
 // [Demystifyingish SVG paths | HTTP 203](https://www.youtube.com/watch?v=9qen5CKjUe8
-
-// ## Notes
-// ------------------------------
-//
-// ### Bezier curves
-// Practice drawing bezier curves (maybe to draw a smiley face)
-// M: Source/starting point
-// C(n): Control points
-// E: End point
