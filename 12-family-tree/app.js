@@ -116,14 +116,15 @@ function draw() {
 
 draw()
 
-// Sources
+// ## Sources
 // ---------
 // https://tinyurl.com/yun2582r
 // https://tinyurl.com/4y7z6dnp
 
-
-// Notes
+// ## Notes
 // ------------------------------
+//
+// ### Bezier curves
 // Practice drawing bezier curves (maybe to draw a smiley face)
 // M: Source/starting point
 // C(n): Control points
