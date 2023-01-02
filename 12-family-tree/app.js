@@ -98,6 +98,20 @@ function draw() {
     .style('fill', 'none')
     .style('stroke', 'red')
 
+  // Draw labels
+  const names = container
+    .append('g')
+    .selectAll('text')
+    // Bind descendant info to text elements
+    .data(information.descendants())
+
+  names
+    .enter()
+    .append('text')
+    .text((datum) => datum.data.child) // The `data` property contains the original data
+    .attr('x', (datum) => datum.x + 7)
+    .attr('y', (datum) => datum.y + 4)
+
   // Bezier curvies
   // ------------------------------
   // Practice drawing bezier curves (maybe to draw a smiley face)
