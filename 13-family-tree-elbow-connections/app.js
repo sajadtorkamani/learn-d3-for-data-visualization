@@ -54,6 +54,9 @@ function draw() {
   // Draw container
   const rectangles = container
     .append('g')
+    .style('fill', 'none')
+    .style('stroke', 'silver')
+    .style('stroke-width', 2)
     .selectAll('rect')
     .data(information.descendants()) // Join the dataset to the circle elements
 
@@ -70,9 +73,6 @@ function draw() {
     .attr('y', (datum) => datum.y - dimensions.rectangleHeight / 2) // Set x coordinate
     .attr('width', dimensions.rectangleWidth)
     .attr('height', dimensions.rectangleHeight)
-    .style('fill', 'none')
-    .style('stroke', 'silver')
-    .style('stroke-width', 2)
 
   // Draw connections
   const connections = container
@@ -110,6 +110,8 @@ function draw() {
   // Draw labels
   const names = container
     .append('g')
+    .style('dominant-baseline', 'middle')
+    .style('text-anchor', 'middle')
     .selectAll('text')
     // Bind descendant info to text elements
     .data(information.descendants())
@@ -118,8 +120,8 @@ function draw() {
     .enter()
     .append('text')
     .text((datum) => datum.data.child) // The `data` property contains the original data
-    .attr('x', (datum) => datum.x + 7)
-    .attr('y', (datum) => datum.y + 4)
+    .attr('x', (datum) => datum.x)
+    .attr('y', (datum) => datum.y)
 }
 
 draw()
