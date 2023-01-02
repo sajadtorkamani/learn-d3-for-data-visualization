@@ -15,9 +15,11 @@ function draw() {
 
   // Dimensions
   const dimensions = {
-    width: 600,
+    width: 900,
     height: 600,
     margins: 50,
+    rectangleWidth: 80,
+    rectangleHeight: 40,
   }
 
   // Draw SVG image
@@ -46,25 +48,31 @@ function draw() {
   // This is a key step. D3 will use the size attributes we pass (500, 300) it
   // to generate scaled x and y coordinates for each tree node. We can then use
   // those coordinates to plot each node on the chart.
-  const treeStructure = d3.tree().size([500, 300])
+  const treeStructure = d3.tree().size([650, 300])
   const information = treeStructure(dataStructure)
 
   // Draw container
-  const circles = container
+  const rectangles = container
     .append('g')
-    .selectAll('circle')
+    .selectAll('rect')
     .data(information.descendants()) // Join the dataset to the circle elements
 
-  console.log({ descendants: information.descendants(), circles })
-
-  // Draw circle elements for each node
-  circles
+  // Draw rectangle elements for each node
+  rectangles
     .enter()
-    .append('circle')
-    .attr('cx', (datum) => datum.x) // Set x coordinate
-    .attr('cy', (datum) => datum.y) // Set x coordinate
-    .attr('r', 5) // Set radius
-    .style('fill', 'blue')
+    .append('rect')
+    // Set X coordinate. Subtract 40 (half of the rectangle width) to
+    // horizontally align the rectangle with the point.
+    .attr('x', (datum) => datum.x - dimensions.rectangleWidth / 2)
+
+    // Set Y coordinate. Subtract 20 (half of the rectangle height) to
+    // vertically align the rectangle with the point.
+    .attr('y', (datum) => datum.y - dimensions.rectangleHeight / 2) // Set x coordinate
+    .attr('width', dimensions.rectangleWidth)
+    .attr('height', dimensions.rectangleHeight)
+    .style('fill', 'none')
+    .style('stroke', 'silver')
+    .style('stroke-width', 2)
 
   // Draw connections
   const connections = container
@@ -131,4 +139,3 @@ draw()
 // M: Source/starting point
 // C(n): Control points
 // E: End point
-
