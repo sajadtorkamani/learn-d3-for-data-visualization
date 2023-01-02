@@ -48,6 +48,7 @@ function draw() {
   const treeStructure = d3.tree().size([500, 300])
   const information = treeStructure(dataStructure)
 
+  // Draw container
   const circles = container
     .append('g')
     .selectAll('circle')
@@ -63,6 +64,46 @@ function draw() {
     .attr('cy', (datum) => datum.y) // Set x coordinate
     .attr('r', 5) // Set radius
     .style('fill', 'blue')
+
+  // Draw connections
+  const connections = container
+    .append('g')
+    .selectAll('path')
+    .data(information.links()) // Bind link data to the path elements
+
+  connections
+    .enter()
+    .append('path')
+    .attr('d', (d) => {
+      // Draw connection between current node and child nodes
+
+      const sourceX = d.source.x
+      const sourceY = d.source.y
+      const targetX = d.target.x
+      const targetY = d.target.y
+      const midPoint = (sourceY + targetY) / 2
+
+      // Set starting point to current node's coordinates
+      const startPoint = `${sourceX},${sourceY}`
+
+      // Set control points
+      const controlPoints = `${sourceX},${midPoint} ${targetX},${midPoint}`
+
+      // Set end points
+      const endPoint = `${targetX},${targetY}`
+
+      const path = `M${startPoint} C ${controlPoints} ${endPoint}`
+
+      console.log(path)
+      return path
+    }) // Draw path
+
+  // Bezier curvies
+  // ------------------------------
+  // Practice drawing bezier curves (maybe to draw a smiley face)
+  // M: Source/starting point
+  // C(n): Control points
+  // E: End point
 }
 
 draw()
