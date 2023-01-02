@@ -71,31 +71,29 @@ function draw() {
     .selectAll('path')
     .data(information.links()) // Bind link data to the path elements
 
+  // View the SVG paths in the DevTools elements tab to understand how the
+  // lines connect.
   connections
     .enter()
     .append('path')
+    // Draw connection between current node and child nodes
     .attr('d', (d) => {
-      // Draw connection between current node and child nodes
-
       const sourceX = d.source.x
       const sourceY = d.source.y
       const targetX = d.target.x
       const targetY = d.target.y
-      const midPoint = (sourceY + targetY) / 2
+      const controlPointY = (sourceY + targetY) / 2
 
       // Set starting point to current node's coordinates
       const startPoint = `${sourceX},${sourceY}`
 
       // Set control points
-      const controlPoints = `${sourceX},${midPoint} ${targetX},${midPoint}`
+      const controlPoints = `${sourceX},${controlPointY} ${targetX},${controlPointY}`
 
       // Set end points
       const endPoint = `${targetX},${targetY}`
 
-      const path = `M${startPoint} C ${controlPoints} ${endPoint}`
-
-      console.log(path)
-      return path
+      return `M${startPoint} C ${controlPoints} ${endPoint}`
     })
     .style('fill', 'none')
     .style('stroke', 'red')
