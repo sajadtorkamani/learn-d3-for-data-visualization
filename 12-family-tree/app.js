@@ -37,14 +37,8 @@ function draw() {
   // Convert tabular data to hierarchical data
   const dataStructure = d3
     .stratify()
-    .id(function (datum) {
-      // Determine unique identifier
-      return datum.child
-    })
-    .parentId(function (datum) {
-      // Determine parent
-      return datum.parent
-    })(data)
+    .id((datum) => datum.child) // Determine unique identifier
+    .parentId((datum) => datum.parent)(data) // Determine parent
 
   // Create tree structure
   // ----------------------
@@ -61,13 +55,14 @@ function draw() {
 
   console.log({ descendants: information.descendants(), circles })
 
-  // Create circle elements for each node
+  // Draw circle elements for each node
   circles
     .enter()
     .append('circle')
     .attr('cx', (datum) => datum.x) // Set x coordinate
     .attr('cy', (datum) => datum.y) // Set x coordinate
     .attr('r', 5) // Set radius
+    .style('fill', 'blue')
 }
 
 draw()
