@@ -56,9 +56,6 @@ function draw() {
   // Draw connections
   const connections = container
     .append('g')
-    .style('fill', 'none')
-    .style('stroke', 'silver')
-    .style('stroke-width', 2)
     .selectAll('path')
     .data(information.links()) // Bind link data to the path elements
 
@@ -84,6 +81,7 @@ function draw() {
   // Draw rectangles
   const rectangles = container
     .append('g')
+    .attr('group-id', 'rectangles')
     .selectAll('rect')
     .data(information.descendants()) // Join the dataset to the circle elements
 
@@ -102,6 +100,7 @@ function draw() {
 
   const spouseRectangles = container
     .append('g')
+    .attr('group-id', 'spouse-rectangles')
     .selectAll('rect')
     .data(information.descendants())
 
@@ -109,18 +108,15 @@ function draw() {
     .enter()
     .append('rect')
     .attr('x', (datum) => datum.x + (dimensions.rectangleWidth / 2 + X_OFFSET))
-
-    // Set Y coordinate. Subtract 20 (half of the rectangle height) to
-    // vertically align the rectangle with the point.
     .attr('y', (datum) => datum.y - dimensions.rectangleHeight / 2) // Set x coordinate
     .attr('width', dimensions.rectangleWidth)
     .attr('height', dimensions.rectangleHeight)
-    .classed('hide', (datum) => typeof datum.spouse === 'undefined')
+    .classed('hide', (datum) => typeof datum.data.spouse === 'undefined')
 
   // Draw labels
   const names = container
     .append('g')
-    .classed('text-lg', true)
+    .attr('group-id', 'names')
     .selectAll('text')
     // Bind descendant info to text elements
     .data(information.descendants())
@@ -132,8 +128,10 @@ function draw() {
     .attr('x', (datum) => datum.x - X_OFFSET)
     .attr('y', (datum) => datum.y)
 
+  // Draw spouse labels
   const spouseNames = container
     .append('g')
+    .attr('group-id', 'spouse-names')
     .selectAll('text')
     .data(information.descendants())
 
@@ -150,7 +148,6 @@ function draw() {
           dimensions.rectangleWidth / 2)
     )
     .attr('y', (datum) => datum.y)
-    .classed('text-lg', true)
 }
 
 draw()

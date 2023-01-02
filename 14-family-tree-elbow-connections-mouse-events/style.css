@@ -7,6 +7,13 @@ rect {
 text {
   dominant-baseline: middle;
   text-anchor: middle;
+  font-size: 20px;
+}
+
+path {
+  fill: none;
+  stroke: silver;
+  stroke-width: 2;
 }
 
 .text-lg {
