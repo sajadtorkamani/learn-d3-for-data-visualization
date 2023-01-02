@@ -106,6 +106,7 @@ function draw() {
     .append('g')
     .style('dominant-baseline', 'middle')
     .style('text-anchor', 'middle')
+    .style('font-size', '20px')
     .selectAll('text')
     // Bind descendant info to text elements
     .data(information.descendants())
