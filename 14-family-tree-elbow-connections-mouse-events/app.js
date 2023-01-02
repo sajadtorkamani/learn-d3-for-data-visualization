@@ -84,9 +84,6 @@ function draw() {
   // Draw rectangles
   const rectangles = container
     .append('g')
-    .style('fill', 'white')
-    .style('stroke', 'silver')
-    .style('stroke-width', 2)
     .selectAll('rect')
     .data(information.descendants()) // Join the dataset to the circle elements
 
@@ -103,6 +100,23 @@ function draw() {
     .attr('width', dimensions.rectangleWidth)
     .attr('height', dimensions.rectangleHeight)
 
+  const spouseRectangles = container
+    .append('g')
+    .selectAll('rect')
+    .data(information.descendants())
+
+  spouseRectangles
+    .enter()
+    .append('rect')
+    .attr('x', (datum) => datum.x + (dimensions.rectangleWidth / 2 + X_OFFSET))
+
+    // Set Y coordinate. Subtract 20 (half of the rectangle height) to
+    // vertically align the rectangle with the point.
+    .attr('y', (datum) => datum.y - dimensions.rectangleHeight / 2) // Set x coordinate
+    .attr('width', dimensions.rectangleWidth)
+    .attr('height', dimensions.rectangleHeight)
+
+  console.log(spouseRectangles)
 
   // Draw labels
   const names = container
