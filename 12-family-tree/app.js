@@ -96,7 +96,9 @@ function draw() {
 
       console.log(path)
       return path
-    }) // Draw path
+    })
+    .style('fill', 'none')
+    .style('stroke', 'red')
 
   // Bezier curvies
   // ------------------------------
