@@ -112,13 +112,6 @@ function draw() {
     .text((datum) => datum.data.child) // The `data` property contains the original data
     .attr('x', (datum) => datum.x + 7)
     .attr('y', (datum) => datum.y + 4)
-
-  // Bezier curvies
-  // ------------------------------
-  // Practice drawing bezier curves (maybe to draw a smiley face)
-  // M: Source/starting point
-  // C(n): Control points
-  // E: End point
 }
 
 draw()
@@ -127,3 +120,11 @@ draw()
 // ---------
 // https://tinyurl.com/yun2582r
 // https://tinyurl.com/4y7z6dnp
+
+
+// Notes
+// ------------------------------
+// Practice drawing bezier curves (maybe to draw a smiley face)
+// M: Source/starting point
+// C(n): Control points
+// E: End point
